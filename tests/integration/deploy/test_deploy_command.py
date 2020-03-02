@@ -123,7 +123,10 @@ class TestDeploy(PackageIntegBase, DeployIntegBase):
         build_command_list = self.get_minimal_build_command_list(template_file=template_path)
 
         self._run_command(build_command_list)
-        stack_name = "test-deploy-no-redeploy-on-same-built-artifacts" + CFN_PYTHON_VERSION_SUFFIX
+        stack_name = "a" + str(uuid.uuid4()).replace("-", "")[:10]
+        self.stack_names.append(stack_name)
+
+        # Package and Deploy in one go without confirming change set on a built template.
         # Should result in a zero exit code.
         deploy_command_list = self.get_deploy_command_list(
             stack_name=stack_name,
